@@ -16,7 +16,7 @@
         <select name="unit" class="field">
             <option value="kg">kg</option><option value="ltr">ltr</option><option value="pcs">pcs</option><option value="box">box</option><option value="mt">MT</option>
         </select>
-        <input name="price" type="number" step="0.01" required placeholder="Price per unit (incl. GST)" class="field">
+        <input name="price" type="number" step="0.01" required placeholder="Price per unit (excl. GST)" class="field">
         <select name="gst_rate" class="field">
             <option value="18">GST 18%</option><option value="12">GST 12%</option><option value="5">GST 5%</option><option value="28">GST 28%</option><option value="0">GST 0%</option>
         </select>
@@ -29,7 +29,7 @@
         <a href="{{ route('products.show', $p) }}" class="flex items-center justify-between px-4 py-3 border-b border-line/60 hover:bg-paper">
             <div>
                 <div class="font-medium text-sm">{{ $p->name }}</div>
-                <div class="text-[12px] text-muted">₹{{ number_format((float) $p->price) }}/{{ $p->unit }} · GST {{ rtrim(rtrim(number_format((float) $p->gst_rate, 2), '0'), '.') }}%</div>
+                <div class="text-[12px] text-muted">₹{{ number_format((float) $p->price) }}/{{ $p->unit }} (excl. GST) · GST {{ rtrim(rtrim(number_format((float) $p->gst_rate, 2), '0'), '.') }}%</div>
             </div>
             @if ($p->spec_params_count > 0)
                 <span class="text-[10px] font-bold text-pass bg-emerald-50 border border-emerald-200 rounded-md px-2 py-1">{{ $p->spec_params_count }} PARAMETERS</span>

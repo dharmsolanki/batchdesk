@@ -42,7 +42,7 @@ class SaleController extends Controller
             'items.*.batch_id' => 'required|exists:batches,id',
             'items.*.qty'      => 'required|numeric|min:0.001',
             'paid_amount'      => 'required|numeric|min:0',
-            'payment_mode'     => 'required|in:cash,upi,card,bank,credit',
+            'payment_mode'     => 'required|in:cash,upi,bank,card,credit',
             'notes'            => 'nullable|string|max:255',
         ]);
 
@@ -55,7 +55,10 @@ class SaleController extends Controller
                 $customer->update(['name' => $data['customer_name']]);
             }
 
-            $invoiceNo = 'INV-' . str_pad((string) (Sale::withoutGlobalScope('company')->where('company_id', Auth::user()->company_id)->count() + 1), 4, '0', STR_PAD_LEFT);
+            $invoiceNo = 'INV-' . str_pad(
+                (string) (Sale::withoutGlobalScope('company')->where('company_id', Auth::user()->company_id)->count() + 1),
+                4, '0', STR_PAD_LEFT
+            );
 
             $sale = Sale::create([
                 'customer_id' => $customer->id,
@@ -73,10 +76,12 @@ class SaleController extends Controller
                 $qty = min((float) $row['qty'], (float) $batch->qty);
                 if ($qty <= 0) continue;
 
-                $priceInclGst = (float) $batch->product->price * $qty;
-                $gstRate = (float) $batch->product->gst_rate;
-                $base = round($priceInclGst / (1 + $gstRate / 100), 2);
-                $gst  = round($priceInclGst - $base, 2);
+                // Price is BASE price (GST exclusive)
+                $basePrice   = (float) $batch->product->price; // per unit, excl. GST
+                $gstRate     = (float) $batch->product->gst_rate;
+                $lineBase    = round($basePrice * $qty, 2);
+                $lineGst     = round($lineBase * $gstRate / 100, 2);
+                $lineTotal   = round($lineBase + $lineGst, 2);
 
                 SaleItem::create([
                     'sale_id'     => $sale->id,
@@ -84,19 +89,19 @@ class SaleController extends Controller
                     'description' => $batch->product->name . ' | Batch: ' . $batch->batch_no . ($batch->exp_date ? ' | Exp: ' . $batch->exp_date->format('m/Y') : ''),
                     'qty'         => $qty,
                     'unit'        => $batch->product->unit,
-                    'unit_price'  => round($base / $qty, 2),
+                    'unit_price'  => $basePrice,
                     'gst_rate'    => $gstRate,
-                    'gst_amount'  => $gst,
-                    'line_total'  => $priceInclGst,
+                    'gst_amount'  => $lineGst,
+                    'line_total'  => $lineTotal,
                 ]);
 
                 $batch->decrement('qty', $qty);
-                $subtotal += $base;
-                $gstTotal += $gst;
+                $subtotal += $lineBase;
+                $gstTotal += $lineGst;
             }
 
-            $total = round($subtotal + $gstTotal, 2);
-            $paid  = min((float) $data['paid_amount'], $total);
+            $total  = round($subtotal + $gstTotal, 2);
+            $paid   = min((float) $data['paid_amount'], $total);
             $status = $paid >= $total ? 'paid' : ($paid > 0 ? 'partial' : 'pending');
 
             if ($paid > 0) {
@@ -104,7 +109,7 @@ class SaleController extends Controller
                     'sale_id' => $sale->id,
                     'amount'  => $paid,
                     'mode'    => $data['payment_mode'],
-                    'note'    => 'Bill ke time',
+                    'note'    => 'At billing',
                 ]);
             }
 
@@ -119,7 +124,8 @@ class SaleController extends Controller
             return $sale;
         });
 
-        return redirect()->route('sales.show', $sale)->with('success', 'Invoice created. Batch numbers are included — COA links can be shared with it.');
+        return redirect()->route('sales.show', $sale)
+            ->with('success', 'Invoice created. Batch numbers are included — COA links can be shared with it.');
     }
 
     public function show(Sale $sale)
