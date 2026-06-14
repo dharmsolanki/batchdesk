@@ -32,7 +32,7 @@
         </div>
 
         <div class="mt-6 space-y-2.5">
-            <a href="https://wa.me/919328212251?text=Hi%2C+I+want+to+activate+my+BatchDesk+subscription+for+{{ urlencode($company->name) }}"
+            <a href="https://wa.me/919723720728?text=Hi%2C+I+want+to+activate+my+BatchDesk+subscription+for+{{ urlencode($company->name) }}"
                target="_blank"
                class="btn-accent block w-full py-3">
                Contact us on WhatsApp to activate
