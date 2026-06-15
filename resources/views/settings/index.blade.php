@@ -13,7 +13,7 @@
 
         @if ($company->logo_path)
             <div class="flex items-center gap-4 mb-4">
-                <img src="{{ Storage::url($company->logo_path) }}"
+                <img src="/public/storage/{{ $company->logo_path }}"
                      alt="Company logo"
                      class="h-14 object-contain border border-line rounded-lg p-2 bg-white">
                 <form method="POST" action="{{ route('settings.logo.remove') }}"

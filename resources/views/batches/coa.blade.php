@@ -23,7 +23,7 @@
 <div class="card p-7">
     <div class="text-center border-b-2 border-navy pb-4">
         @if ($batch->company->logo_path)
-            <img src="{{ Storage::url($batch->company->logo_path) }}"
+            <img src="/public/storage/{{ $batch->company->logo_path }}"
                  alt="{{ $batch->company->name }}"
                  class="h-14 object-contain mx-auto mb-2">
         @endif
