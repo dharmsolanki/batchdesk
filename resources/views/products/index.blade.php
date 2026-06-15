@@ -16,7 +16,7 @@
         <select name="unit" class="field">
             <option value="kg">kg</option><option value="ltr">ltr</option><option value="pcs">pcs</option><option value="box">box</option><option value="mt">MT</option>
         </select>
-        <input name="price" type="number" step="0.01" required placeholder="Price per unit (excl. GST)" class="field">
+        <input name="price" type="number" step="0.01" required placeholder="Price per unit excl. GST (e.g. 120)" class="field">
         <select name="gst_rate" class="field">
             <option value="18">GST 18%</option><option value="12">GST 12%</option><option value="5">GST 5%</option><option value="28">GST 28%</option><option value="0">GST 0%</option>
         </select>

@@ -22,6 +22,11 @@
 
 <div class="card p-7">
     <div class="text-center border-b-2 border-navy pb-4">
+        @if ($batch->company->logo_path)
+            <img src="{{ Storage::url($batch->company->logo_path) }}"
+                 alt="{{ $batch->company->name }}"
+                 class="h-14 object-contain mx-auto mb-2">
+        @endif
         <div class="font-bold text-2xl tracking-tight text-navy">{{ $batch->company->name }}</div>
         <div class="text-xs text-muted mt-1">
             {{ $batch->company->address ?: $batch->company->city }} · Ph: {{ $batch->company->phone }}

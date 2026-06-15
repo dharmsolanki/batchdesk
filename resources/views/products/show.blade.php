@@ -6,7 +6,7 @@
 
 <form method="POST" action="{{ route('products.update', $product) }}" class="flex items-center gap-2 mb-4">
     @csrf @method('PATCH')
-    <input name="price" type="number" step="0.01" value="{{ (float) $product->price }}" placeholder="Price per unit (excl. GST)" class="field w-32 text-sm">
+    <input name="price" type="number" step="0.01" value="{{ (float) $product->price }}" placeholder="Price excl. GST" class="field w-32 text-sm">
     <select name="gst_rate" class="field w-28 text-sm">
         @foreach ([0, 5, 12, 18, 28] as $r)
             <option value="{{ $r }}" {{ (float) $product->gst_rate == $r ? 'selected' : '' }}>GST {{ $r }}%</option>
