@@ -8,6 +8,7 @@ use App\Models\MaterialLot;
 use App\Models\Product;
 use App\Models\TestResult;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -16,8 +17,8 @@ class BatchController extends Controller
     public function index(Request $request)
     {
         $batches = Batch::with('product')
-            ->when($request->q, fn ($q, $term) => $q->where('batch_no', 'like', "%{$term}%")
-                ->orWhereHas('product', fn ($p) => $p->where('name', 'like', "%{$term}%")))
+            ->when($request->q, fn($q, $term) => $q->where('batch_no', 'like', "%{$term}%")
+                ->orWhereHas('product', fn($p) => $p->where('name', 'like', "%{$term}%")))
             ->latest()->paginate(20);
 
         return view('batches.index', compact('batches'));
@@ -28,7 +29,15 @@ class BatchController extends Controller
         $products = Product::orderBy('name')->get();
         $lots = MaterialLot::with('rawMaterial')->where('qty', '>', 0)->orderBy('expiry')->get();
 
-        return view('batches.create', compact('products', 'lots'));
+        // Auto-generate sequential batch number for today
+        $todayPrefix = 'B-' . now()->format('ymd') . '-';
+        $todayCount = Batch::withoutGlobalScope('company')
+            ->where('company_id', Auth::user()->company_id)
+            ->whereDate('created_at', today())
+            ->count();
+        $suggestedBatchNo = $todayPrefix . str_pad($todayCount + 1, 3, '0', STR_PAD_LEFT);
+
+        return view('batches.create', compact('products', 'lots', 'suggestedBatchNo'));
     }
 
     public function store(Request $request)

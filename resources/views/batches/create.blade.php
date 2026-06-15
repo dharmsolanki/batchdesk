@@ -22,7 +22,7 @@
         <div class="grid grid-cols-2 gap-3">
             <div>
                 <label class="label">Batch no. *</label>
-                <input name="batch_no" required value="{{ old('batch_no', 'B-' . now()->format('ymd') . '-01') }}" class="field font-mono">
+                <input name="batch_no" required value="{{ old('batch_no', $suggestedBatchNo) }}" class="field font-mono">
             </div>
             <div>
                 <label class="label">Quantity produced *</label>
