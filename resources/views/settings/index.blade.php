@@ -101,7 +101,7 @@
             @endif
         </div>
         @if (!$company->subscribed)
-        <a href="https://wa.me/91XXXXXXXXXX?text=Hi,+I+want+to+subscribe+to+BatchDesk+for+{{ urlencode($company->name) }}"
+        <a href="https://wa.me/919723720728?text=Hi,+I+want+to+subscribe+to+BatchDesk+for+{{ urlencode($company->name) }}"
            target="_blank"
            class="btn-accent block text-center w-full py-2.5 mt-3 text-sm">
             Contact us to subscribe
