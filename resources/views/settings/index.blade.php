@@ -1,39 +1,10 @@
 @extends('layouts.app')
-@php use Illuminate\Support\Facades\Storage; @endphp
 @section('title', 'Settings — BatchDesk')
 @section('content')
 
 <h1 class="font-bold text-2xl tracking-tight mb-4">Company Settings</h1>
 
 <div class="space-y-4">
-
-    {{-- Logo --}}
-    <div class="card p-5">
-        <div class="section-title mb-3">Company Logo</div>
-        <p class="text-sm text-muted mb-4">Your logo appears on the COA letterhead. Use PNG or JPG, recommended size 300×80px.</p>
-
-        @if ($company->logo_path)
-            <div class="flex items-center gap-4 mb-4">
-                <img src="{{ Storage::url($company->logo_path) }}"
-                     alt="Company logo"
-                     class="h-14 object-contain border border-line rounded-lg p-2 bg-white">
-                <form method="POST" action="{{ route('settings.logo.remove') }}"
-                      onsubmit="return confirm('Remove logo?')">
-                    @csrf @method('DELETE')
-                    <button class="text-danger text-sm font-semibold">Remove logo</button>
-                </form>
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('settings.logo') }}" enctype="multipart/form-data"
-              class="flex items-center gap-3">
-            @csrf
-            <input type="file" name="logo" accept="image/png,image/jpeg"
-                   class="field flex-1 text-sm py-2">
-            <button class="btn-accent px-5 py-2 text-sm">Upload</button>
-        </form>
-    </div>
-
     {{-- Company details --}}
     <div class="card p-5">
         <div class="section-title mb-3">Company Details</div>

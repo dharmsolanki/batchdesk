@@ -15,23 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // Public
 Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect()->route('dashboard');
-    }
-
-    $features = [
-        ['Batch production tracking', 'Record every batch — quantity, dates, raw material lots, full traceability.'],
-        ['One-click QR-verified COA', 'Enter test results — certificate ready. Buyer scans QR to verify authenticity.'],
-        ['GST invoicing with batch numbers', 'Invoice auto-includes batch no. and expiry. WhatsApp bill + COA link together.'],
-        ['Raw material traceability', 'Supplier lot → batch → customer. Full chain recorded for recall readiness.'],
-        ['Expiry alerts', 'Dashboard warns you 45 days before any batch expires.'],
-        ['Works on any device', 'Mobile-first web app — factory floor, office or on the road.'],
-        ['Split payments', 'Cash + UPI + bank on the same invoice, partial payments, outstanding balance.'],
-        ['WhatsApp sharing', 'Send invoice and COA verification links to your buyer in one tap.'],
-        ['Multi-user ready', 'Your QC person and accountant work in the same system.'],
-    ];
-
-    return view('landing', compact('features'));
+    return auth()->check() ? redirect()->route('dashboard') : view('landing');
 })->name('landing');
 
 Route::get('/verify/{token}', [VerifyController::class, 'show'])->name('coa.verify');
@@ -95,6 +79,4 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // Settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
-    Route::post('/settings/logo', [SettingsController::class, 'uploadLogo'])->name('settings.logo');
-    Route::delete('/settings/logo', [SettingsController::class, 'removeLogo'])->name('settings.logo.remove');
 });
