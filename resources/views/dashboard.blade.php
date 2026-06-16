@@ -2,6 +2,44 @@
 @section('title', 'Dashboard — BatchDesk')
 @section('content')
 
+{{-- Onboarding checklist (shown until complete) --}}
+@if (!$onboardingComplete)
+<section class="card border-brand/30 p-5 mb-4">
+    <div class="flex items-center justify-between mb-3">
+        <div>
+            <h2 class="font-bold text-base">Getting started</h2>
+            <div class="text-xs text-muted">Complete these steps to get the most out of BatchDesk</div>
+        </div>
+        <div class="text-xs font-bold text-brand">
+            {{ collect($checklist)->where('done', true)->count() }} / {{ count($checklist) }}
+        </div>
+    </div>
+    @php $done = collect($checklist)->where('done', true)->count(); $total = count($checklist); @endphp
+    <div class="h-1.5 bg-line rounded-full mb-4 overflow-hidden">
+        <div class="h-full bg-brand rounded-full transition-all" style="width: {{ ($done / $total) * 100 }}%"></div>
+    </div>
+    <div class="space-y-2">
+        @foreach ($checklist as $step)
+        <div class="flex items-center gap-3 py-1.5">
+            @if ($step['done'])
+                <div class="w-5 h-5 rounded-full bg-pass flex items-center justify-center shrink-0">
+                    <svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                </div>
+                <span class="text-sm text-muted line-through">{{ $step['label'] }}</span>
+            @else
+                <div class="w-5 h-5 rounded-full border-2 border-line shrink-0"></div>
+                <div class="flex-1 min-w-0">
+                    <a href="{{ route($step['route']) }}" class="text-sm font-medium text-brand hover:underline">{{ $step['label'] }}</a>
+                    <div class="text-[11px] text-muted">{{ $step['hint'] }}</div>
+                </div>
+                <a href="{{ route($step['route']) }}" class="text-[11px] font-bold text-brand border border-brand/30 rounded px-2 py-0.5 shrink-0">Go →</a>
+            @endif
+        </div>
+        @endforeach
+    </div>
+</section>
+@endif
+
 <section class="bg-navy text-white rounded-xl p-5 mb-4">
     <div class="text-cyan-200 text-[11px] font-semibold uppercase tracking-widest">Today's sales · {{ now()->format('d M Y') }}</div>
     <div class="font-bold text-4xl tracking-tight mt-1">₹{{ number_format($todaySales) }}</div>
