@@ -337,7 +337,8 @@
                     one.</p>
             </div>
             <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-5 mt-10">
-                @php$features = [
+                @php
+                    $features = [
                         [
                             'Batch-wise inventory',
                             'Every batch tracked with quantity, manufacturing and expiry dates. Only quality-released stock can be sold — enforced automatically.',
@@ -374,7 +375,7 @@
                             'Multi-user ready',
                             'Your QC person enters results, your accountant raises invoices — everyone works in the same system.',
                         ],
-                ]; @endphp
+                ]; @endphp ?>
                 @foreach ($features as $f)
                     <div class="bg-white border border-line rounded-xl p-5">
                         <div class="font-semibold">{{ $f[0] }}</div>
@@ -649,31 +650,31 @@
         <h2 class="font-bold text-3xl tracking-tight text-center">Frequently asked questions</h2>
         <div class="mt-8 space-y-3">
             @php$faqs = [
-                    [
-                        'Do I need any technical knowledge to use BatchDesk?',
-                        'No. If you can use WhatsApp, you can use BatchDesk. Setup takes about 10 minutes: enter your company details, add a product with its specification, and you are ready to create your first batch.',
-                    ],
-                    [
-                        'What exactly is a Certificate of Analysis (COA)?',
-                        'A COA is a document proving that a specific batch was tested and meets its quality specifications. Buyers in pharma, food, chemicals and cosmetics routinely require a COA with every batch they purchase.',
-                    ],
-                    [
-                        'Can my buyers verify a COA without an account?',
-                        'Yes. The QR code on every certificate opens a public verification page — any phone camera works, no app or login needed.',
-                    ],
-                    [
-                        'Does it work on mobile?',
-                        'Yes. BatchDesk is mobile-first — it works in any browser on any phone, tablet or computer, and can be added to your home screen like an app.',
-                    ],
-                    [
-                        'What happens after the free trial?',
-                        'You can subscribe for ₹1,499/month (or ₹14,999/year). Your data stays intact. If you choose not to continue, you can export your records first.',
-                    ],
-                    [
-                        'Is my data safe and private?',
-                        'Each company\'s data is fully isolated — your products, batches, customers and prices are visible only to your team members.',
-                    ],
-            ]; @endphp
+                                                    [
+                                                        'Do I need any technical knowledge to use BatchDesk?',
+                                                        'No. If you can use WhatsApp, you can use BatchDesk. Setup takes about 10 minutes: enter your company details, add a product with its specification, and you are ready to create your first batch.',
+                                                    ],
+                                                    [
+                                                        'What exactly is a Certificate of Analysis (COA)?',
+                                                        'A COA is a document proving that a specific batch was tested and meets its quality specifications. Buyers in pharma, food, chemicals and cosmetics routinely require a COA with every batch they purchase.',
+                                                    ],
+                                                    [
+                                                        'Can my buyers verify a COA without an account?',
+                                                        'Yes. The QR code on every certificate opens a public verification page — any phone camera works, no app or login needed.',
+                                                    ],
+                                                    [
+                                                        'Does it work on mobile?',
+                                                        'Yes. BatchDesk is mobile-first — it works in any browser on any phone, tablet or computer, and can be added to your home screen like an app.',
+                                                    ],
+                                                    [
+                                                        'What happens after the free trial?',
+                                                        'You can subscribe for ₹1,499/month (or ₹14,999/year). Your data stays intact. If you choose not to continue, you can export your records first.',
+                                                    ],
+                                                    [
+                                                        'Is my data safe and private?',
+                                                        'Each company\'s data is fully isolated — your products, batches, customers and prices are visible only to your team members.',
+                                                    ],
+                                    ]; @endphp ?> ?>
             @foreach ($faqs as $faq)
                 <details class="border border-line rounded-xl px-5 py-4 bg-white group">
                     <summary class="font-semibold cursor-pointer list-none flex justify-between items-center">
