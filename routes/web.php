@@ -15,7 +15,23 @@ use Illuminate\Support\Facades\Route;
 
 // Public
 Route::get('/', function () {
-    return auth()->check() ? redirect()->route('dashboard') : view('landing');
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+
+    $features = [
+        ['Batch production tracking', 'Record every batch — quantity, dates, raw material lots, full traceability.'],
+        ['One-click QR-verified COA', 'Enter test results — certificate ready. Buyer scans QR to verify authenticity.'],
+        ['GST invoicing with batch numbers', 'Invoice auto-includes batch no. and expiry. WhatsApp bill + COA link together.'],
+        ['Raw material traceability', 'Supplier lot → batch → customer. Full chain recorded for recall readiness.'],
+        ['Expiry alerts', 'Dashboard warns you 45 days before any batch expires.'],
+        ['Works on any device', 'Mobile-first web app — factory floor, office or on the road.'],
+        ['Split payments', 'Cash + UPI + bank on the same invoice, partial payments, outstanding balance.'],
+        ['WhatsApp sharing', 'Send invoice and COA verification links to your buyer in one tap.'],
+        ['Multi-user ready', 'Your QC person and accountant work in the same system.'],
+    ];
+
+    return view('landing', compact('features'));
 })->name('landing');
 
 Route::get('/verify/{token}', [VerifyController::class, 'show'])->name('coa.verify');
