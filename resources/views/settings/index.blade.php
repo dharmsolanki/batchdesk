@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@php use Illuminate\Support\Facades\Storage; @endphp
 @section('title', 'Settings — BatchDesk')
 @section('content')
 
@@ -13,7 +14,7 @@
 
         @if ($company->logo_path)
             <div class="flex items-center gap-4 mb-4">
-                <img src="/public/storage/{{ $company->logo_path }}"
+                <img src="{{ Storage::url($company->logo_path) }}"
                      alt="Company logo"
                      class="h-14 object-contain border border-line rounded-lg p-2 bg-white">
                 <form method="POST" action="{{ route('settings.logo.remove') }}"
@@ -101,7 +102,7 @@
             @endif
         </div>
         @if (!$company->subscribed)
-        <a href="https://wa.me/919723720728?text=Hi,+I+want+to+subscribe+to+BatchDesk+for+{{ urlencode($company->name) }}"
+        <a href="https://wa.me/91XXXXXXXXXX?text=Hi,+I+want+to+subscribe+to+BatchDesk+for+{{ urlencode($company->name) }}"
            target="_blank"
            class="btn-accent block text-center w-full py-2.5 mt-3 text-sm">
             Contact us to subscribe
