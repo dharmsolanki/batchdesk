@@ -37,12 +37,28 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $data = $request->validate([
+            'name'     => 'required|string|max:120',
+            'hsn'      => 'nullable|string|max:20',
+            'unit'     => 'required|string|max:20',
             'price'    => 'required|numeric|min:0',
             'gst_rate' => 'required|numeric|min:0|max:28',
         ]);
         $product->update($data);
 
         return back()->with('success', 'Product updated.');
+    }
+
+    public function updateParam(Request $request, Product $product, SpecParam $param)
+    {
+        abort_unless($param->product_id === $product->id, 404);
+        $data = $request->validate([
+            'parameter'     => 'required|string|max:120',
+            'specification' => 'required|string|max:160',
+            'method'        => 'nullable|string|max:120',
+        ]);
+        $param->update($data);
+
+        return back()->with('success', 'Parameter updated.');
     }
 
     public function storeParam(Request $request, Product $product)

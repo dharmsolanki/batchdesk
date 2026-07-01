@@ -10,7 +10,7 @@ class MaterialController extends Controller
 {
     public function index()
     {
-        $materials = RawMaterial::with(['lots' => fn ($q) => $q->where('qty', '>', 0)])->orderBy('name')->get();
+        $materials = RawMaterial::with(['lots' => fn($q) => $q->where('qty', '>', 0)])->orderBy('name')->get();
         return view('materials.index', compact('materials'));
     }
 
@@ -39,5 +39,29 @@ class MaterialController extends Controller
         MaterialLot::create($data);
 
         return back()->with('success', 'Lot received — traceability is now linked.');
+    }
+
+    public function update(Request $request, RawMaterial $rawMaterial)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:120',
+            'unit' => 'required|string|max:20',
+        ]);
+        $rawMaterial->update($data);
+
+        return back()->with('success', 'Material updated.');
+    }
+
+    public function updateLot(Request $request, MaterialLot $lot)
+    {
+        $data = $request->validate([
+            'lot_no'   => 'required|string|max:60',
+            'supplier' => 'nullable|string|max:120',
+            'qty'      => 'required|numeric|min:0',
+            'expiry'   => 'nullable|date',
+        ]);
+        $lot->update($data);
+
+        return back()->with('success', 'Lot updated.');
     }
 }

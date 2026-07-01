@@ -135,4 +135,16 @@ class BatchController extends Controller
 
         return view('batches.coa', compact('batch'));
     }
+
+    public function update(Request $request, Batch $batch)
+    {
+        $data = $request->validate([
+            'mfg_date' => 'required|date',
+            'exp_date' => 'nullable|date|after:mfg_date',
+            'remarks'  => 'nullable|string|max:255',
+        ]);
+        $batch->update($data);
+
+        return back()->with('success', 'Batch updated.');
+    }
 }

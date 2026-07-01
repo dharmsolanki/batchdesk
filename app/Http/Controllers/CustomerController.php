@@ -23,4 +23,17 @@ class CustomerController extends Controller
         $customer->load(['sales.items']);
         return view('customers.show', compact('customer'));
     }
+
+    public function update(Request $request, Customer $customer)
+    {
+        $data = $request->validate([
+            'name'       => 'required|string|max:120',
+            'phone'      => 'required|string|max:20',
+            'gst_number' => 'nullable|string|max:20',
+            'address'    => 'nullable|string|max:255',
+        ]);
+        $customer->update($data);
+
+        return back()->with('success', 'Customer updated.');
+    }
 }

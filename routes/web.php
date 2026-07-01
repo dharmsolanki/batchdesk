@@ -54,11 +54,15 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
     Route::patch('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::post('/products/{product}/params', [ProductController::class, 'storeParam'])->name('products.params.store');
+    Route::patch('/products/{product}/params/{param}', [ProductController::class, 'updateParam'])->name('products.params.update');
+
     Route::delete('/products/{product}/params/{param}', [ProductController::class, 'destroyParam'])->name('products.params.destroy');
 
     Route::get('/materials', [MaterialController::class, 'index'])->name('materials.index');
     Route::post('/materials', [MaterialController::class, 'store'])->name('materials.store');
     Route::post('/materials/lots', [MaterialController::class, 'storeLot'])->name('materials.lots.store');
+    Route::patch('/materials/{rawMaterial}', [MaterialController::class, 'update'])->name('materials.update');
+    Route::patch('/materials/lots/{lot}', [MaterialController::class, 'updateLot'])->name('materials.lots.update');
 
     Route::get('/batches', [BatchController::class, 'index'])->name('batches.index');
     Route::get('/batches/new', [BatchController::class, 'create'])->name('batches.create');
@@ -66,6 +70,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/batches/{batch}', [BatchController::class, 'show'])->name('batches.show');
     Route::post('/batches/{batch}/results', [BatchController::class, 'saveResults'])->name('batches.results');
     Route::get('/batches/{batch}/coa', [BatchController::class, 'coa'])->name('batches.coa');
+    Route::patch('/batches/{batch}', [BatchController::class, 'update'])->name('batches.update');
 
     Route::get('/bills', [SaleController::class, 'index'])->name('sales.index');
     Route::get('/bills/new', [SaleController::class, 'create'])->name('sales.create');
@@ -75,6 +80,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
 
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
+    Route::patch('/customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
 
     // Settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
