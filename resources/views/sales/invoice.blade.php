@@ -117,6 +117,7 @@
             <thead>
                 <tr class="text-left text-[11px] text-muted uppercase tracking-wide border-b border-line">
                     <th class="py-2 font-semibold">Item / Batch</th>
+                    <th class="py-2 font-semibold text-center">HSN</th>
                     <th class="py-2 font-semibold text-center">Qty</th>
                     <th class="py-2 font-semibold text-right">Rate</th>
                     <th class="py-2 font-semibold text-right">GST</th>
@@ -127,6 +128,8 @@
                 @foreach ($sale->items as $item)
                     <tr class="border-b border-line/60">
                         <td class="py-2.5 pr-2">{{ $item->description }}</td>
+                        <td class="py-2.5 text-center text-muted text-xs font-mono">{{ $item->batch->product->hsn ?: '—' }}
+                        </td>
                         <td class="py-2.5 text-center whitespace-nowrap">
                             {{ rtrim(rtrim(number_format((float) $item->qty, 3), '0'), '.') }} {{ $item->unit }}</td>
                         <td class="py-2.5 text-right">₹{{ number_format((float) $item->unit_price, 2) }}</td>
