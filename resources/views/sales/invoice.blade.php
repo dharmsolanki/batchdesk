@@ -57,6 +57,10 @@
     <div class="no-print flex gap-2 mb-4">
         <a href="https://wa.me/{{ $waPhone }}?text={{ $waText }}" target="_blank"
             class="btn-accent flex-1 text-center text-sm py-3">WhatsApp (Invoice + COA)</a>
+        <a href="{{ route('declarations.show', $sale) }}"
+            class="flex-1 bg-navy text-white font-bold rounded-xl py-3 text-center text-sm">
+            📋 Declaration
+        </a>
         <button onclick="window.print()" class="btn-primary flex-1 text-sm py-3">Print / Save as PDF</button>
     </div>
 

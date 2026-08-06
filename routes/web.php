@@ -12,10 +12,12 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TrialController;
 use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DeclarationController;
+use Illuminate\Support\Facades\Auth;
 
 // Public
 Route::get('/', function () {
-    return auth()->check() ? redirect()->route('dashboard') : view('landing');
+    return Auth::check() ? redirect()->route('dashboard') : view('landing');
 })->name('landing');
 
 Route::get('/verify/{token}', [VerifyController::class, 'show'])->name('coa.verify');
@@ -85,4 +87,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // Settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
+
+
+    Route::get('/bills/{sale}/declaration', [DeclarationController::class, 'show'])->name('declarations.show');
+    Route::post('/bills/{sale}/declaration', [DeclarationController::class, 'store'])->name('declarations.store');
 });
