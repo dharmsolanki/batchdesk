@@ -13,6 +13,7 @@ use App\Http\Controllers\TrialController;
 use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DeclarationController;
+use App\Http\Controllers\QuotationController;
 use Illuminate\Support\Facades\Auth;
 
 // Public
@@ -91,4 +92,11 @@ Route::middleware(['auth', 'subscription'])->group(function () {
 
     Route::get('/bills/{sale}/declaration', [DeclarationController::class, 'show'])->name('declarations.show');
     Route::post('/bills/{sale}/declaration', [DeclarationController::class, 'store'])->name('declarations.store');
+
+    Route::get('/quotations', [QuotationController::class, 'index'])->name('quotations.index');
+    Route::get('/quotations/create', [QuotationController::class, 'create'])->name('quotations.create');
+    Route::post('/quotations', [QuotationController::class, 'store'])->name('quotations.store');
+    Route::get('/quotations/{quotation}', [QuotationController::class, 'show'])->name('quotations.show');
+    Route::patch('/quotations/{quotation}/status', [QuotationController::class, 'updateStatus'])->name('quotations.status');
+    Route::delete('/quotations/{quotation}', [QuotationController::class, 'destroy'])->name('quotations.destroy');
 });
