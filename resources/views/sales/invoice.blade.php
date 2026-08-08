@@ -128,7 +128,8 @@
                 @foreach ($sale->items as $item)
                     <tr class="border-b border-line/60">
                         <td class="py-2.5 pr-2">{{ $item->description }}</td>
-                        <td class="py-2.5 text-center text-muted text-xs font-mono">{{ $item->batch->product->hsn ?: '—' }}
+                        <td class="py-2.5 text-center text-muted text-xs font-mono">
+                            {{ $item->hsn ?: $item->batch?->product?->hsn ?: '—' }}</td>
                         </td>
                         <td class="py-2.5 text-center whitespace-nowrap">
                             {{ rtrim(rtrim(number_format((float) $item->qty, 3), '0'), '.') }} {{ $item->unit }}</td>

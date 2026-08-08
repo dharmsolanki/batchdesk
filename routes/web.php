@@ -14,6 +14,7 @@ use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DeclarationController;
 use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Auth;
 
 // Public
@@ -99,4 +100,18 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/quotations/{quotation}', [QuotationController::class, 'show'])->name('quotations.show');
     Route::patch('/quotations/{quotation}/status', [QuotationController::class, 'updateStatus'])->name('quotations.status');
     Route::delete('/quotations/{quotation}', [QuotationController::class, 'destroy'])->name('quotations.destroy');
+
+    Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
+    Route::get('/suppliers/create', [SupplierController::class, 'create'])->name('suppliers.create');
+    Route::post('/suppliers', [SupplierController::class, 'store'])->name('suppliers.store');
+    Route::get('/suppliers/{supplier}', [SupplierController::class, 'show'])->name('suppliers.show');
+    Route::patch('/suppliers/{supplier}', [SupplierController::class, 'update'])->name('suppliers.update');
+
+    // Supplier Products
+    Route::post('/suppliers/{supplier}/products', [SupplierController::class, 'storeProduct'])->name('suppliers.products.store');
+    Route::patch('/suppliers/{supplier}/products/{product}', [SupplierController::class, 'updateProduct'])->name('suppliers.products.update');
+
+    // Supplier COAs
+    Route::post('/suppliers/{supplier}/products/{product}/coas', [SupplierController::class, 'storeCoa'])->name('suppliers.coas.store');
+    Route::patch('/suppliers/coas/{coa}', [SupplierController::class, 'updateCoa'])->name('suppliers.coas.update');
 });

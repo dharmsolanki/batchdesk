@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Quotation ' . $quotation->quotation_no)
+@section('title', 'Proforma Invoice ' . $quotation->quotation_no)
 @section('content')
 
     <style>
@@ -19,19 +19,8 @@
         <button onclick="window.print()" class="btn-primary flex-1 text-sm py-3">🖨 Print</button>
         <a href="{{ route('quotations.index') }}" class="btn-accent flex-1 text-center text-sm py-3">← Back</a>
 
-        <form method="POST" action="{{ route('quotations.status', $quotation) }}" class="flex gap-2 w-full">
-            @csrf @method('PATCH')
-            <select name="status" class="field flex-1 text-sm">
-                @foreach (['draft' => 'Draft', 'sent' => 'Sent', 'accepted' => 'Accepted', 'rejected' => 'Rejected'] as $val => $label)
-                    <option value="{{ $val }}" {{ $quotation->status === $val ? 'selected' : '' }}>
-                        {{ $label }}</option>
-                @endforeach
-            </select>
-            <button class="btn-accent px-4 text-sm">Update</button>
-        </form>
-
         <form method="POST" action="{{ route('quotations.destroy', $quotation) }}"
-            onsubmit="return confirm('Delete this quotation?')" class="w-full">
+            onsubmit="return confirm('Delete this Proforma Invoice?')" class="w-full">
             @csrf @method('DELETE')
             <button
                 class="w-full text-danger text-sm font-semibold border border-danger/30 rounded-xl py-2.5">Delete</button>
@@ -59,7 +48,7 @@
                     · Lic: {{ $quotation->company->license_no }}
                 @endif
             </div>
-            <div class="font-bold text-base mt-3 tracking-[0.2em] text-brand uppercase">Quotation / Proforma Invoice</div>
+            <div class="font-bold text-base mt-3 tracking-[0.2em] text-brand uppercase">Proforma Invoice</div>
         </div>
 
         {{-- Meta --}}

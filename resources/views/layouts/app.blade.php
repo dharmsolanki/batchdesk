@@ -221,7 +221,7 @@
 
     @auth
         <nav class="no-print fixed bottom-0 inset-x-0 bg-white border-t border-line z-40">
-            <div class="max-w-3xl mx-auto grid grid-cols-6 text-center text-[11px] font-medium">
+            <div class="max-w-3xl mx-auto grid grid-cols-7 text-center text-[11px] font-medium">
                 @php
                     $active = 'text-brand';
                     $idle = 'text-muted';
@@ -252,7 +252,7 @@
                         <line x1="16" y1="17" x2="8" y2="17" />
                         <polyline points="10 9 9 9 8 9" />
                     </svg>
-                    Quotes
+                    Proforma
                 </a>
                 <a href="{{ route('sales.create') }}" class="py-1 -mt-4">
                     <div
@@ -263,6 +263,15 @@
                         </svg>
                     </div>
                     <span class="{{ request()->routeIs('sales.create') ? $active : $idle }}">Invoice</span>
+                </a>
+                <a href="{{ route('suppliers.index') }}"
+                    class="py-2.5 {{ request()->routeIs('suppliers.*') ? $active : $idle }}">
+                    <svg class="w-5 h-5 mx-auto mb-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                    Suppliers
                 </a>
                 <a href="{{ route('products.index') }}"
                     class="py-2.5 {{ request()->routeIs('products.*') || request()->routeIs('materials.*') ? $active : $idle }}">

@@ -1,9 +1,8 @@
 @extends('layouts.app')
-@section('title', 'New Quotation — BatchDesk')
+@section('title', 'New Proforma — BatchDesk')
 @section('content')
 
-    <h1 class="font-bold text-2xl tracking-tight mb-4">New Quotation</h1>
-
+    <h1 class="font-bold text-2xl tracking-tight mb-4">New Proforma Invoice</h1>
     <form method="POST" action="{{ route('quotations.store') }}" x-data="qtForm()" class="space-y-4">
         @csrf
 
@@ -130,7 +129,7 @@
         </div>
 
         <button class="btn-primary w-full py-3.5 rounded-xl text-base">
-            Create Quotation — ₹<span x-text="total.toLocaleString('en-IN')"></span>
+            Create Proforma Invoice — ₹<span x-text="total.toLocaleString('en-IN')"></span>
         </button>
     </form>
 

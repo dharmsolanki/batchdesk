@@ -63,7 +63,7 @@ class QuotationController extends Controller
         }
 
         $quotation = DB::transaction(function () use ($data, $customerId) {
-            $no = 'QT-' . str_pad(
+            $no = 'PI-' . str_pad(
                 Quotation::withoutGlobalScope('company')
                     ->where('company_id', Auth::user()->company_id)->count() + 1,
                 4,
@@ -115,7 +115,7 @@ class QuotationController extends Controller
         });
 
         return redirect()->route('quotations.show', $quotation)
-            ->with('success', 'Quotation created.');
+            ->with('success', 'Proforma Invoice created.');
     }
 
     public function show(Quotation $quotation)
@@ -137,6 +137,6 @@ class QuotationController extends Controller
     {
         $quotation->delete();
         return redirect()->route('quotations.index')
-            ->with('success', 'Quotation deleted.');
+            ->with('success', 'Proforma Invoice deleted.');
     }
 }
